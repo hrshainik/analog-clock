@@ -1,0 +1,109 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clock {
+  position: relative;
+  width: 35rem;
+  height: 35rem;
+  background-color: white;
+  border: 1.8rem solid black;
+  border-radius: 50%;
+  box-shadow: 0.5rem 1.5rem 2rem rgba(black, 0.35),
+    inset 0 0 1.5rem rgba(black, 0.8);
+
+  &::before {
+    position: absolute;
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 50%;
+    z-index: 100;
+    box-shadow: 0 0 0 0.3rem #aa282c, 0 0 0 0.6rem black;
+  }
+
+  & .hand {
+    --rotation: 0;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    transform: translateX(-50%) rotate(calc(var(--rotation) * 1deg));
+    box-shadow: 0 0 1rem rgba(black, 0.5);
+  }
+
+  & .hour {
+    width: 1rem;
+    height: 25%;
+    background-color: black;
+  }
+
+  & .minute {
+    width: 0.7rem;
+    height: 35%;
+    background-color: black;
+  }
+
+  & .second {
+    width: 0.4rem;
+    height: 35%;
+    background-color: #aa282c;
+  }
+
+  & .number {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    & .line {
+      width: 2px;
+      height: 1.2rem;
+      background-color: black;
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &:nth-child(3n) {
+      & .line {
+        width: 4px;
+        height: 1.8rem;
+      }
+    }
+  }
+}
+
+$columns: 12;
+
+@for $i from 1 through $columns {
+  .clock .number#{$i} {
+    transform: rotate(#{30 * $i}deg);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 7px;
+  }
+}
